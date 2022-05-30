@@ -23,6 +23,7 @@
   </center>
 <script>
     status="";
+    objects=[];
 
 
 function setup()
@@ -35,13 +36,25 @@ function setup()
 
 function preload()
 {
-    img=loadImage("https://cdn1.epicgames.com/ue/product/Screenshot/Image8-1920x1080-7e52a3372316cd1fd87c66c6682ddfad.png?resize=1&w=1920");
+    img=loadImage("https://t4.ftcdn.net/jpg/00/63/96/03/360_F_63960378_etJG4hzuxQtP0JLZFVwc9dKci4x0VbNz.jpg");
 }
 
 function draw()
 {
     image(img,0,0,640,420);
-        
+    if(status!="")
+    {
+        for(i=0;i<objects.length;i++)
+        {
+            document.getElementById("status").innerHTML="status:Objects Detected";
+            fill(255,0,0);
+            percent=floor(objects[i].confidence*100);
+            text(objects[i].label+" "+percent+"%",objects[i].x+15,objects[i].y+15);
+            noFill();
+            stroke(255,0,0);
+            rect(objects[i].x,objects[i].y,objects[i].width,objects[i].height)
+        }
+    }    
 }
 
 function modelloaded()
@@ -58,6 +71,7 @@ function gotresults(error,results)
         console.log(error);
     }
     console.log(results);
+    objects=results;
 }
 </script>
   
